@@ -1,7 +1,12 @@
-(ns lab-1.core-test
+(ns lab1_test
   (:require [clojure.test :refer :all]
-            [lab-1.core :refer :all]))
+            [lab1 :refer :all]))
 
-(deftest a-test
+(deftest perm-test
+ (testing "FIXME, I fail."
+    (is (= (perm [1 2 3] 2) '((1 2) (1 3) (2 1) (2 3) (3 1) (3 2))))))
+
+(deftest perm_tail-test
   (testing "FIXME, I fail."
-    (is (= 0 1))))
+    (is (= (perm_tail [1 2 3] 2) '((1 2) (1 3) (2 1) (2 3) (3 1) (3 2))))))
+

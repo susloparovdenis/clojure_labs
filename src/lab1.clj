@@ -1,21 +1,18 @@
-(ns lab-1.core)
+(ns lab1)
+;1.1
 (defn perm [alph n]
   (if (zero? n)
     (list [])
-    (for [head alph
-          tail (perm
-                (remove #{head} alph) (dec n))]
+    (for  [head alph
+           tail (perm (remove #{head} alph) (dec n))]
       (cons head tail))))
-(perm ['a' 'b' 'c'] 2)
+;1.2
+(defn perm_tail ([alph n] (perm_tail alph n (for [a alph] [a])))
+  ([alph n acc]
+   (if (= n 1)
+     acc
+     (recur alph (dec n)
+            (for [el   acc
+                  head (remove (into #{} el) alph)]
+              (conj el head))))))
 
-
-(defn perm2 [alph n]
-  (if (zero? n)
-    (list [])
-    (lazy-seq
-     (apply concat (for [x alph]
-                     (map #(cons x %) (perm2 (remove #{x} alph) (dec n))))))))
-
-
-(perm2 ['a' 'b' 'c'] 2)
-(cons 0 [1,2,3,4])
