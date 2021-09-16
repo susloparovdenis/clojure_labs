@@ -3,14 +3,22 @@
             [lab1 :refer :all]))
 
 (deftest perm-test
- (testing "FIXME, I fail."
-    (is (= (perm [1 2 3] 2) '((1 2) (1 3) (2 1) (2 3) (3 1) (3 2))))))
+  (is (= (perm [1 2 3] 2)
+         '((1 2) (1 3) (2 1) (2 3) (3 1) (3 2)))))
 
 (deftest perm_tail-test
-    (is (= (perm_tail [1 2 3] 2) '((1 2) (1 3) (2 1) (2 3) (3 1) (3 2)))))
+  (is (= (perm_tail [1 2 3] 2)
+         '((1 2) (1 3) (2 1) (2 3) (3 1) (3 2)))))
 
 (deftest my-map-test
-  (is (= (my-map inc [1 2 3 4] ) [2 3 4 5])))
+  (is (= (my-map inc [1 2 3 4])
+         [2 3 4 5])))
 
 (deftest my-filter-test
-  (is (= (my-filter #(> %1 2) [1,2,3,4]) [3 4])))
+  (is (= (my-filter #(> %1 2) [1,2,3,4])
+         [3 4])))
+
+(deftest perm3-test
+  (is (= (perm3 [1 2 3] 2)
+         '((1 3) (1 2) (2 1) (2 3) (3 1) (3 2)))))
+
