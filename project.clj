@@ -6,4 +6,3 @@
   :dependencies [[org.clojure/clojure "1.10.1"] [cider/cider-nrepl "0.26.0"]]
   :plugins [[lein-cljfmt "0.8.0"] [cider/cider-nrepl "0.26.0"]]
 )
- 
