@@ -1,19 +1,20 @@
 (ns lab2_test
   (:require [clojure.test :refer :all]
-            [lab2 :refer :all]))
+            [lab2.lab2_1 :refer :all]))
 
 (defn pow4 [x] (reduce * (repeat 4 x)))
 
+(defmacro get-time [expr]
+  `(Float/parseFloat
+     (second (re-find #": (.+) "
+                      (with-out-str
+                        (time ~expr))))))
 
+(deftest assert-memomized-faster-ten-times
+  (is (>
+        (get-time (dotimes [i 4] (integral pow4 1002)))
+        (* 10 (get-time (dotimes [i 4] (memoized-integral pow4 1002)))))))
 
-(memoized-integral pow4 10000)
-(deftest pow4-test
-  (is (= (pow4 2)
-         16)))
-
-(time (mem))
 (deftest time-comp
-  
   (is (= (pow4 2)
          16)))
-
