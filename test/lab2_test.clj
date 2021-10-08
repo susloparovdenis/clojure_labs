@@ -10,10 +10,10 @@
                       (with-out-str
                         (time ~expr))))))
 
-(deftest assert-memomized-faster-ten-times
+"" (deftest assert-memomized-faster-ten-timesa
   (is (>
-        (get-time (dotimes [i 4] (integral pow4 1002)))
-        (* 10 (get-time (dotimes [i 4] (memoized-integral pow4 1002)))))))
+        (get-time (dotimes [_ 4] (integral pow4 1002)))
+        (* 10 (get-time (dotimes [_ 4] (memoized-integral pow4 1002)))))))
 
 (deftest time-comp
   (is (= (pow4 2)
