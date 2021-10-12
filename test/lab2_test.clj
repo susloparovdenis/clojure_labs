@@ -1,29 +1,27 @@
 (ns lab2_test
+  (:use clojure.algo.generic.math-functions)
   (:require [clojure.test :refer :all]
-            [same :refer [ish? zeroish?]]
-            [lab2.lab2_1 :refer :all]
-            )
-  )
+            [clojure.algo.generic :refer :all]
+            [lab2.lab2_1 :refer :all]))
+
+(defmacro get-time [expr]
+  `(Float/parseFloat
+    (second (re-find #": (.+) "
+                     (with-out-str
+                       (time ~expr))))))
 
 (defn pow4 [x] (reduce * (repeat 4 x)))
 (defn pow3 [x] (reduce * (repeat 3 x)))
 
-(defmacro get-time [expr]
-  `(Float/parseFloat
-     (second (re-find #": (.+) "
-                      (with-out-str
-                        (time ~expr))))))
-
-
-
 (deftest integral-calculation
-  (is (ish?
-        (integral pow3 10)
-        (/  (pow4 20) 4))))
-        ;(* 10 (get-time (dotimes [_ 4] (memoized-integral pow4 1002)))))))
+  (is (approx=
+       (let [integral (create_integral_fn (/ 1 30) pow3)] (integral 4))
+       (/ (pow4 4) 4)
+       1e-2)))
 
-(deftest assert-memomized-faster-ten-times
+(deftest assert-memoized-faster-ten-times
   (is (<
-        (get-time (dotimes [_ 4] (integral pow4 1002)))
-        (* 10 (get-time (dotimes [_ 4] (memoized-integral pow4 1002)))))))
+       (let [f (create_integral_fn (/ 1 30) pow4)]
+         (* 10 (get-time (dotimes [i 40] (f i)))))
 
+       (get-time (dotimes [i 40] (integral-tail pow4 i))))))
