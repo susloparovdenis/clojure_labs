@@ -1,28 +1,34 @@
 (ns lab2.lab2_1
-  (:use infix.macros))
+  (:use infix.macros)
+  (:require [lab2.common :refer :all]))
 
-(def default_step (/ 1 40))
-
-(defn t-area [a b h]
-  ($= (a + b) * h / 2.0))
+(defn integral-non-tail
+  ([step f x]
+   (let [prev (- x step)]
+     (if (< prev 0)
+       0
+       (+ (integral-non-tail step f prev) (t-area step (f x) (f prev)))
+       ))))
 
 (defn integral-tail
-  ([f x] (integral-tail f x 0))
-  ([f x acc]
-   (let [prev (- x default_step)]
+  ([step f x] (integral-tail step f x 0))
+  ([step f x acc]
+   (let [prev (- x step)]
      (if (< prev 0)
        acc
-       (recur f prev (+ acc (t-area (f x) (f prev) default_step)))))))
+       (recur step f prev (+ acc (t-area step (f x) (f prev))))))))
+
 
 (defn create_integral_fn
   ([f] (create_integral_fn default_step f))
   ([step f]
    (let [integral
          (memoize
-          (fn [integral x]
-            (let [prev (- x step)]
-              (if (< prev 0)
-                0
-                (+ (t-area (f x) (f prev) step)
-                   (integral integral prev))))))]
+           (fn [integral x]
+             (let [prev (- x step)]
+               (if (< prev 0)
+                 0
+                 (+ (t-area step (f x) (f prev))
+                    (integral integral prev))))))]
      (partial integral integral))))
+

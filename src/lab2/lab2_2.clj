@@ -1,8 +1,20 @@
-(ns lab2.lab2_2)
-
-(def step 0.001)
-
-(defn t-area [a b h]
-  (/ (* (+ a b) h) 2))
+(ns lab2.lab2_2
+  (:use infix.macros)
+  (:require [lab2.common :refer :all]))
 
 
+(defn create_seq_integral_fn
+  ([f] (create_seq_integral_fn default_step f))
+  ([step f]
+   (let [ticks (iterate (partial + step) 0)
+         f-vals (lazy-seq (->> ticks (map f)))
+         segments (partition 2 (interleave f-vals (rest f-vals)))
+         partial-integrals (->> segments
+                                (map vec)
+                                (map #(apply (partial t-area step) %)))
+
+         integral (lazy-seq (reductions + partial-integrals))
+         ]
+     (fn [x]
+       (nth integral (dec (/ x step)))
+       ))))
