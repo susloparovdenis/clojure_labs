@@ -1,9 +1,8 @@
 (ns lab2.lab2_2)
 
-(def default_step (/ 1 40))
+(def step 0.001)
 
 (defn t-area [a b h]
-  ($= (a + b) * h / 2.0))
-
+  (/ (* (+ a b) h) 2))
 
 
