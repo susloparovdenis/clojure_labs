@@ -8,9 +8,8 @@
   ([step f]
    (let [ticks (iterate (partial + step) 0)
          f-vals (lazy-seq (->> ticks (map f)))
-         segments (partition 2 (interleave f-vals (rest f-vals)))
+         segments (map (partial conj []) f-vals (rest f-vals))
          partial-integrals (->> segments
-                                (map vec)
                                 (map #(apply (partial t-area step) %)))
 
          integral (lazy-seq (reductions + partial-integrals))
