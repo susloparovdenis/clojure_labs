@@ -6,14 +6,7 @@
   :dependencies [[org.clojure/clojure "1.10.3"] [org.clojure/algo.generic "0.1.3"] [rm-hull/infix "0.4.0"] [pjstadig/humane-test-output "0.11.0"]]
   :plugins [
             [lein-cljfmt "0.8.0"]
-            ;[cider/cider-nrepl "0.27.1"]
+            [cider/cider-nrepl "0.26.0"]
             [com.jakemccrary/lein-test-refresh "0.24.1"]
-
             ]
-  ;:injections [(require 'pjstadig.humane-test-output)
-  ;             (pjstadig.humane-test-output/activate!)]
-  :repl-options {
-                 }
-  :test-refresh {:notify-command ["terminal-notifier" "-title" "Tests" "-message"]
-                 :quiet          true
-                 :changes-only   true})
+  :injections [(require 'pjstadig.humane-test-output)])
