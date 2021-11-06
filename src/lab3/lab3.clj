@@ -1,6 +1,4 @@
-(ns lab3.lab3_1)
-
-
+(ns lab3.lab3)
 
 
 (defn my-partition [n coll]
@@ -11,9 +9,8 @@
        (->> coll
             (my-partition block-size )
             (map #(future (filter pred %)))
-            (doall)
             (mapcat deref)
             ))
 
-(my-parallel-filter  3 #(< % 5) (range 10))
+
 
