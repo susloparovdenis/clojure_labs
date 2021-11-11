@@ -10,13 +10,13 @@
        (+ (integral-non-tail step f prev) (t-area step (f x) (f prev)))
        ))))
 
-(defn integral-tail
-  ([step f x] (integral-tail step f x 0))
-  ([step f x acc]
-   (let [prev (- x step)]
-     (if (< prev 0)
-       acc
-       (recur step f prev (+ acc (t-area step (f x) (f prev))))))))
+
+(defn integral-tail [step f x]
+  (loop [x x acc 0]
+    (let [prev (- x step)]
+      (if (< prev 0)
+        acc
+        (recur prev (+ acc (t-area step (f x) (f prev))))))))
 
 
 (defn create_integral_fn
