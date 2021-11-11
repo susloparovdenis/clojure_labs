@@ -12,8 +12,10 @@
                                 (map vec)
                                 (map #(apply (partial t-area step) %)))
 
-         integral (reductions + partial-integrals)
-         ]
+         integral (reductions + partial-integrals)]
      (fn [x]
-       (nth integral (dec (/ x step)))
-       ))))
+       (let [n (/ x step)]
+         (+ (nth integral (dec n))
+            (t-area (rem x step) (nth f-vals n) (f x))
+            )
+         )))))
