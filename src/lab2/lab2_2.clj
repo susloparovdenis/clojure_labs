@@ -7,7 +7,7 @@
   ([step f]
    (let [ticks (iterate (partial + step) 0)
          f-vals (->> ticks (map f))
-         segments (partition 2 (interleave f-vals (rest f-vals)))
+         segments (map list f-vals (rest f-vals))
          partial-integrals (->> segments
                                 (map vec)
                                 (map #(apply (partial t-area step) %)))
